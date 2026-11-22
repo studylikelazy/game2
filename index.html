@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>CRYSTAL FRONT — Auto Tactics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <main class="game-shell">
+      <header class="topbar panel pixel-corners">
+        <a class="brand" href="#battlefield" aria-label="Crystal Front ホーム">
+          <span class="brand-gem" aria-hidden="true"><i></i><b></b><em></em></span>
+          <span><strong>CRYSTAL</strong><small>FRONT / AUTO TACTICS</small></span>
+        </a>
+        <div class="stage-readout">
+          <span class="eyebrow">CURRENT SECTOR</span>
+          <strong id="stageLabel">09-04</strong>
+          <span class="stage-name" id="stageName">翠嵐の境界</span>
+        </div>
+        <div class="top-actions">
+          <div class="resource"><span class="crystal-icon" aria-hidden="true"></span><b id="crystals">1,280</b><small>CRYSTAL</small></div>
+          <button class="icon-button settings-button" id="settingsButton" aria-label="表示設定">SET</button>
+        </div>
+      </header>
+
+      <section class="battle-layout" id="battlefield" aria-label="自動戦闘画面">
+        <aside class="left-rail">
+          <section class="panel commander-card pixel-corners">
+            <div class="panel-kicker"><span>COMMANDER</span><span class="online-dot">ONLINE</span></div>
+            <div class="commander-main">
+              <div class="portrait-frame" aria-label="指揮官アステルのドット絵肖像"><canvas id="portraitCanvas" width="112" height="112"></canvas></div>
+              <div>
+                <h1>アステル</h1>
+                <p>星詠みの先導者</p>
+                <div class="level-chip">LV <b id="heroLevel">24</b></div>
+              </div>
+            </div>
+            <div class="xp-row"><span>EXP</span><div class="meter"><i id="heroXp" style="width:64%"></i></div><b id="xpText">640 / 1,000</b></div>
+            <div class="stats-grid" aria-label="アステルのステータス">
+              <div><small>ATK</small><strong id="statAtk">184</strong></div>
+              <div><small>DEF</small><strong>92</strong></div>
+              <div><small>SPD</small><strong>1.34</strong></div>
+              <div><small>CRIT</small><strong>18%</strong></div>
+            </div>
+          </section>
+
+          <section class="panel squad-card pixel-corners">
+            <div class="section-title"><span>ACTIVE SQUAD</span><button class="tiny-button" id="formationButton">自動編成</button></div>
+            <div class="squad-list">
+              <button class="unit-row active" data-unit="0"><span class="mini-sprite mage" aria-hidden="true"></span><span><b>アステル</b><small>ARCANIST · LV24</small></span><strong>184</strong></button>
+              <button class="unit-row" data-unit="1"><span class="mini-sprite knight" aria-hidden="true"></span><span><b>ヴァン</b><small>VANGUARD · LV23</small></span><strong>152</strong></button>
+              <button class="unit-row" data-unit="2"><span class="mini-sprite ranger" aria-hidden="true"></span><span><b>リラ</b><small>RANGER · LV22</small></span><strong>147</strong></button>
+            </div>
+          </section>
+        </aside>
+
+        <section class="center-stage">
+          <div class="battle-header panel pixel-corners">
+            <div><span class="eyebrow">AUTO BATTLE</span><h2 id="encounterTitle">WAVE 03 <em>/</em> 05</h2></div>
+            <div class="battle-mode"><span class="auto-mark">A</span><div><b>AUTO SYSTEM</b><small id="autoState">稼働中 · 次の目標を追跡</small></div></div>
+            <div class="battle-controls" aria-label="戦闘速度の操作">
+              <button id="pauseButton" class="square-button" aria-label="一時停止">Ⅱ</button>
+              <button id="speedButton" class="speed-button"><span>SPEED</span><b id="speedText">x2</b></button>
+            </div>
+          </div>
+
+          <section class="arena-wrap panel pixel-corners">
+            <div class="arena-meta"><span class="threat-pill"><i></i> DANGER <b id="dangerText">MODERATE</b></span><span id="timerText">01:42</span><span class="arena-zone">VIRIDIAN RIM // B-14</span></div>
+            <canvas id="battleCanvas" width="1280" height="640" aria-label="自動戦闘中のドット絵バトルフィールド"></canvas>
+            <div class="target-plate"><span>TARGET</span><b id="targetName">苔鎧のゴーレム</b><div class="enemy-meter"><i id="enemyHpFill"></i></div><strong id="enemyHpText">3,120 / 3,120</strong></div>
+            <div class="chain-notice" id="chainNotice">CHAIN +12%</div>
+            <div class="arena-corner tl" aria-hidden="true"></div><div class="arena-corner br" aria-hidden="true"></div>
+          </section>
+
+          <section class="skill-deck" aria-label="自動スキルデッキ">
+            <article class="skill-card panel pixel-corners ready" id="skill0">
+              <div class="skill-icon nova" aria-hidden="true"><i></i><b></b></div>
+              <div class="skill-copy"><small>AUTO SKILL · 01</small><h3>星環ノヴァ</h3><p>前方範囲に魔力 220%</p></div>
+              <div class="cooldown"><b id="cooldown0">READY</b><span>CAST</span></div>
+            </article>
+            <article class="skill-card panel pixel-corners" id="skill1">
+              <div class="skill-icon ward" aria-hidden="true"><i></i><b></b></div>
+              <div class="skill-copy"><small>AUTO SKILL · 02</small><h3>蒼天の結界</h3><p>被ダメージを 30% 軽減</p></div>
+              <div class="cooldown"><b id="cooldown1">08.2</b><span>SEC</span></div>
+            </article>
+            <article class="skill-card panel pixel-corners" id="skill2">
+              <div class="skill-icon volley" aria-hidden="true"><i></i><b></b></div>
+              <div class="skill-copy"><small>AUTO SKILL · 03</small><h3>閃影連射</h3><p>敵単体に 6 HIT</p></div>
+              <div class="cooldown"><b id="cooldown2">04.6</b><span>SEC</span></div>
+            </article>
+          </section>
+        </section>
+
+        <aside class="right-rail">
+          <section class="panel progress-card pixel-corners">
+            <div class="section-title"><span>SECTOR PROGRESS</span><span id="sectorPercent">72%</span></div>
+            <div class="sector-meter"><i id="sectorFill" style="width:72%"></i></div>
+            <div class="sector-map" aria-label="現在のセクター進行状況"><span class="cleared"></span><span class="cleared"></span><span class="cleared"></span><span class="current"></span><span></span></div>
+            <p><b id="remainingEncounters">3</b> encounters until sector clear</p>
+          </section>
+
+          <section class="panel combat-card pixel-corners">
+            <div class="section-title"><span>COMBAT FEED</span><button class="tiny-button" id="clearLog">CLEAR</button></div>
+            <ul id="combatLog" class="combat-log" aria-live="polite">
+              <li><time>01:42</time><span class="tag skill">SKILL</span><p>アステルが 星環ノヴァ を予約</p></li>
+              <li><time>01:41</time><span class="tag crit">CRIT</span><p>リラの急所射撃 <b>+326</b></p></li>
+              <li><time>01:39</time><span class="tag sys">AUTO</span><p>ヴァンが前衛を維持</p></li>
+              <li><time>01:37</time><span class="tag hit">HIT</span><p>苔鎧のゴーレムに <b>184</b> ダメージ</p></li>
+            </ul>
+          </section>
+
+          <section class="panel loot-card pixel-corners">
+            <div class="section-title"><span>ESTIMATED LOOT</span><span class="loot-cycle">/ WAVE</span></div>
+            <div class="loot-row"><span class="loot-shard" aria-hidden="true"></span><div><b>翠晶の欠片</b><small>UPGRADE MATERIAL</small></div><strong>12–18</strong></div>
+            <div class="loot-row"><span class="loot-coin" aria-hidden="true"></span><div><b>ギル</b><small>SECTOR BOUNTY</small></div><strong>340</strong></div>
+          </section>
+        </aside>
+      </section>
+
+      <footer class="footer-bar panel pixel-corners">
+        <p><span class="status-light"></span><b>AUTO PILOT</b> <span id="footerStatus">最適な行動を選択しています</span></p>
+        <div><button class="footer-button" id="tipsButton">戦術ログ</button><button class="footer-button primary" id="goTopButton">SECTOR 09 を攻略中</button></div>
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="game.js"></script>
+  </body>
+</html>
