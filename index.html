@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#05080f" />
+  <meta name="description" content="ABYSS FRONTIER - 深淵を潜るターン制ローグライト。スキルとレリックを積み、3層の深淵を踏破せよ。" />
+  <title>ABYSS FRONTIER — 深淵の開拓者</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/ui/styles.css" />
+</head>
+<body>
+  <div id="app" class="app">
+    <!-- タイトル画面 -->
+    <section id="screen-title" class="screen screen--title">
+      <div class="title-wrap">
+        <div class="title-emblem" aria-hidden="true">▽</div>
+        <h1 class="title">ABYSS<span>FRONTIER</span></h1>
+        <p class="title-sub">深淵の開拓者</p>
+        <p class="title-lead">
+          3層の深淵。5つの部屋。交互に迫る死。<br />
+          スキルとレリックを積み重ね、主を討て。
+        </p>
+        <div id="title-actions" class="title-actions"></div>
+        <div id="title-meta" class="title-meta"></div>
+      </div>
+      <div class="title-bg" aria-hidden="true">
+        <div class="orb orb--1"></div>
+        <div class="orb orb--2"></div>
+        <div class="grid-veil"></div>
+      </div>
+    </section>
+
+    <!-- ゲーム画面 -->
+    <section id="screen-game" class="screen screen--game" hidden>
+      <header class="hud">
+        <div class="hud-left">
+          <div class="hud-depth">
+            <span class="hud-label">DEPTH</span>
+            <span id="hud-act" class="hud-value">1</span>
+            <span class="hud-dim">/ 3</span>
+            <span id="hud-floor" class="hud-floor">B1-1</span>
+          </div>
+          <div id="hud-gold" class="hud-gold">◎ 0</div>
+        </div>
+        <div id="hud-map" class="hud-map" aria-label="現在の部屋の進行状況"></div>
+        <div class="hud-right">
+          <button id="btn-help" class="icon-btn" title="ヘルプ">?</button>
+          <button id="btn-menu" class="icon-btn" title="メニュー">≡</button>
+        </div>
+      </header>
+
+      <main id="stage" class="stage"></main>
+    </section>
+
+    <!-- オーバーレイ領域 -->
+    <div id="overlay" class="overlay" hidden></div>
+    <div id="toast" class="toast" hidden></div>
+    <div id="log-panel" class="log-panel" aria-live="polite"></div>
+  </div>
+
+  <script type="module" src="src/ui/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: ['main', 'feature/**', 'arena/**']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 構文チェック
+        run: |
+          for f in src/core/*.js src/ui/*.js tools/*.js; do node --check "$f"; done
+      - name: エンジンテスト（ヘッドレス）
+        run: npm test
+      - name: UIスモークテスト（jsdom）
+        run: |
+          npm i --no-save jsdom
+          JSDOM_PATH=./node_modules/jsdom/lib/api.js node tests/ui.smoke.mjs
+      - name: 静的配信できるか確認
+        run: |
+          node tools/serve.js &
+          sleep 1
+          curl -fsS http://127.0.0.1:4173/ > /dev/null
+          curl -fsS http://127.0.0.1:4173/src/ui/main.js > /dev/null
+          kill %1

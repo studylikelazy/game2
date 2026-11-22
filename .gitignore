@@ -1,0 +1,35 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Node
+node_modules/
+npm-debug.log*
+.npm/
+
+# Godot (将来Godotへ移植する場合の生成キャッシュ)
+.godot/
+*.translation
+
+# ビルド成果物 / エクスポート
+dist/
+build/
+public/build/
+*.pck
+*.wasm
+*.zip
+
+# テスト・カバレッジ
+coverage/
+.nyc_output/
+test-results/
+
+# 個人設定・秘密情報
+.env
+.env.*
+!.env.example
+*.local
+secrets/
